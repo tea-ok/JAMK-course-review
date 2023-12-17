@@ -1,0 +1,28 @@
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+
+# Ignore Resharper files
+_ReSharper*/
+
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore build logs and test results
+*.log
+TestResults/
+
+# Ignore miscellaneous files
+Thumbs.db
+*.DS_Store
