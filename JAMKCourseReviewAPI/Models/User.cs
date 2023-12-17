@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UniversityCourseReviewAPI.Models
+namespace JAMKCourseReviewAPI.Models
 {
     public class User
     {

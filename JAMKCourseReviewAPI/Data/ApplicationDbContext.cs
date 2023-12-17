@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using UniversityCourseReviewAPI.Models;
+using JAMKCourseReviewAPI.Models;
 
-namespace UniversityCourseReviewAPI.Data
+namespace JAMKCourseReviewAPI.Data
 {
     public class ApplicationDbContext : DbContext
     {
