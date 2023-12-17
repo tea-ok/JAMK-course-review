@@ -26,3 +26,7 @@ TestResults/
 # Ignore miscellaneous files
 Thumbs.db
 *.DS_Store
+
+# Appsettings
+appsettings.json
+appsettings.Development.json
