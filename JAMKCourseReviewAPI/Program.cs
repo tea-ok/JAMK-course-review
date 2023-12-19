@@ -32,7 +32,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Add database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TestDB") + ";TrustServerCertificate=true"));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

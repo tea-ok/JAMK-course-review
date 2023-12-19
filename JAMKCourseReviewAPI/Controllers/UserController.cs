@@ -21,14 +21,11 @@ namespace JAMKCourseReviewAPI.Controllers
         {
             try
             {
-                // Create the user
                 _userService.Create(user);
-
                 return Ok();
             }
             catch (Exception ex)
             {
-                // Return a HTTP Status code and a message in case of error
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -38,7 +35,6 @@ namespace JAMKCourseReviewAPI.Controllers
         {
             try
             {
-                // Authenticate the user
                 var token = _userService.Authenticate(user.Username, user.Password);
 
                 if (token == null)
@@ -48,7 +44,6 @@ namespace JAMKCourseReviewAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Return a HTTP Status code and a message in case of error
                 return BadRequest(new { message = ex.Message });
             }
         }
