@@ -3,7 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using JAMKCourseReviewAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using JAMKCourseReviewAPI.Services;
+using JAMKCourseReviewAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -28,7 +29,11 @@ builder.Services.AddAuthentication(x =>
     };
 });
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<IUserService, UserService>();
+
+// Add Identity services
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 // Add database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

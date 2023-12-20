@@ -1,7 +1,13 @@
-using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JAMKCourseReviewAPI.Models;
-using JAMKCourseReviewAPI.Services;
+using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using System.Text;
 
 namespace JAMKCourseReviewAPI.Controllers
 {
@@ -9,91 +15,85 @@ namespace JAMKCourseReviewAPI.Controllers
     [Route("users")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
-            _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            try
+            var newUser = new User
             {
-                var newUser = new User
-                {
-                    Username = user.Username,
-                    Password = user.Password,
-                    EmailAddress = user.EmailAddress,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName
-                };
-                
-                _userService.Create(newUser);
+                UserName = model.UserName,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (result.Succeeded)
+            {
                 return Ok();
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(result.Errors);
             }
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            try
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+
+            if (result.Succeeded)
             {
-                var token = _userService.Authenticate(model.Username, model.Password);
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:Key"]);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[] 
+                    {
+                        new Claim(ClaimTypes.Name, model.Username.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(30),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                    Issuer = _configuration["Jwt:Issuer"],
+                    Audience = _configuration["Jwt:Audience"]
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
 
-                if (token == null)
-                    return Unauthorized();
-
-                return Ok(new { token });
+                return Ok(new { Token = tokenString });
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new { message = "Username or password is incorrect" });
             }
         }
 
-        [HttpGet("test-token-add")] // Testing token generation
-        public IActionResult GenerateTestToken()
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
         {
-            try
-            {
-                var token = _userService.GenerateTestToken();
-
-                return Ok(new { token });
-            }
-            catch (Exception ex)
-            {
-                // Return a HTTP Status code and a message in case of error
-                return BadRequest(new { message = ex.Message });
-            }
+            await _signInManager.SignOutAsync();
+            return Ok();
         }
 
-        [HttpGet("test-token-validity")] // Testing token validation
-        public IActionResult ValidateTestToken(string token)
+        [Authorize]
+        [HttpGet("protected")] // Testing authorization
+        public IActionResult Protected()
         {
-            try
-            {
-                bool isValid = _userService.ValidateToken(token);
-
-                if (isValid)
-                {
-                    return Ok(new { message = "Token is valid" });
-                }
-                else
-                {
-                    return BadRequest(new { message = "Token is not valid" });
-                }
-            }
-            catch (Exception ex)
-            {
-                // Return a HTTP Status code and a message in case of error
-                return BadRequest(new { message = ex.Message });
-            }
+            string username = User.Identity.Name;
+            return Ok(new { message = $"Hello {username}" });
         }
     }
 }
