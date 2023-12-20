@@ -6,7 +6,7 @@ using JAMKCourseReviewAPI.Services;
 namespace JAMKCourseReviewAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -21,7 +21,16 @@ namespace JAMKCourseReviewAPI.Controllers
         {
             try
             {
-                _userService.Create(user);
+                var newUser = new User
+                {
+                    Username = user.Username,
+                    Password = user.Password,
+                    EmailAddress = user.EmailAddress,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                };
+                
+                _userService.Create(newUser);
                 return Ok();
             }
             catch (Exception ex)
@@ -31,11 +40,11 @@ namespace JAMKCourseReviewAPI.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(User user)
+        public IActionResult Login(LoginModel model)
         {
             try
             {
-                var token = _userService.Authenticate(user.Username, user.Password);
+                var token = _userService.Authenticate(model.Username, model.Password);
 
                 if (token == null)
                     return Unauthorized();

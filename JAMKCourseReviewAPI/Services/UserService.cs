@@ -112,8 +112,6 @@ namespace JAMKCourseReviewAPI.Services
             }
         }
 
-
-
         private string HashPassword(string password)
         {
             if (password == null)
@@ -124,7 +122,7 @@ namespace JAMKCourseReviewAPI.Services
 
             // Generate a salt
             var salt = new byte[16];
-            using (var rng = RandomNumberGenerator.Create())
+            using (var rng = RNGCryptoServiceProvider.Create())
             {
                 rng.GetBytes(salt);
             }
@@ -162,13 +160,16 @@ namespace JAMKCourseReviewAPI.Services
             var hash = pbkdf2.GetBytes(20);
 
             // Compare the results
-            for (int i = 0; i < 20; i++)
-            {
-                if (hashBytes[i + 16] != hash[i])
-                    return false;
-            }
+            // for (int i = 0; i < 20; i++)
+            // {
+            //     if (hashBytes[i + 16] != hash[i])
+            //         return false;
+            // }
 
-            return true;
+            // return true;
+
+            // Compare the results using secure comparison
+            return hashBytes.Skip(16).SequenceEqual(hash);
         }
     }
 }
