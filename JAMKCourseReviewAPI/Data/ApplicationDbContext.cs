@@ -12,6 +12,8 @@ namespace JAMKCourseReviewAPI.Data
         {
         }
 
-        // Add other DbSets for other models later
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<TeacherCourse> TeacherCourses { get; set; }
     }
 }

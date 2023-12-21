@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAMKCourseReviewAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231220162207_AddUserModel")]
-    partial class AddUserModel
+    [Migration("20231221223951_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,124 @@ namespace JAMKCourseReviewAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("JAMKCourseReviewAPI.Models.Course", b =>
+                {
+                    b.Property<string>("CourseCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float?>("ContactCredits")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentScheduling")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Credits")
+                        .HasColumnType("real");
+
+                    b.Property<string>("EmployerConnections")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvaluationScale")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExamSchedule")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacultyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FurtherInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InternationalConnections")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LearningMaterial")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("MaxSeats")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("MinSeats")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Objective")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("OnlineCredits")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Qualifications")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeachingMethods")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Workload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CourseCode");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("JAMKCourseReviewAPI.Models.Teacher", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeacherId");
+
+                    b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("JAMKCourseReviewAPI.Models.TeacherCourse", b =>
+                {
+                    b.Property<int>("TeacherCourseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherCourseId"));
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeacherCourseId");
+
+                    b.HasIndex("CourseCode");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherCourses");
+                });
 
             modelBuilder.Entity("JAMKCourseReviewAPI.Models.User", b =>
                 {
@@ -234,6 +352,25 @@ namespace JAMKCourseReviewAPI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("JAMKCourseReviewAPI.Models.TeacherCourse", b =>
+                {
+                    b.HasOne("JAMKCourseReviewAPI.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JAMKCourseReviewAPI.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

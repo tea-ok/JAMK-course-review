@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JAMKCourseReviewAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUserModel : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,6 +52,52 @@ namespace JAMKCourseReviewAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CourseTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Credits = table.Column<float>(type: "real", nullable: false),
+                    CourseType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Objective = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TeachingMethods = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LearningMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Qualifications = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployerConnections = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExamSchedule = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InternationalConnections = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Workload = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentScheduling = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FurtherInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EvaluationScale = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FacultyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OnlineCredits = table.Column<float>(type: "real", nullable: true),
+                    ContactCredits = table.Column<float>(type: "real", nullable: true),
+                    MinSeats = table.Column<float>(type: "real", nullable: true),
+                    MaxSeats = table.Column<float>(type: "real", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.CourseCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    TeacherId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.TeacherId);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +206,32 @@ namespace JAMKCourseReviewAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TeacherCourses",
+                columns: table => new
+                {
+                    TeacherCourseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
+                    CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherCourses", x => x.TeacherCourseId);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourses_Courses_CourseCode",
+                        column: x => x.CourseCode,
+                        principalTable: "Courses",
+                        principalColumn: "CourseCode",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "TeacherId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +270,16 @@ namespace JAMKCourseReviewAPI.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourses_CourseCode",
+                table: "TeacherCourses",
+                column: "CourseCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourses_TeacherId",
+                table: "TeacherCourses",
+                column: "TeacherId");
         }
 
         /// <inheritdoc />
@@ -219,10 +301,19 @@ namespace JAMKCourseReviewAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "TeacherCourses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Teachers");
         }
     }
 }
