@@ -111,9 +111,6 @@ namespace JAMKCourseReviewAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OriginalTeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("TeacherId");
 
                     b.ToTable("Teachers");

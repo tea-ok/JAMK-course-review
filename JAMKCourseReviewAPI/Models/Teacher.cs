@@ -7,7 +7,6 @@ namespace JAMKCourseReviewAPI.Models
     {
         [Key]
         public int TeacherId { get; set; }
-        public int OriginalTeacherId { get; set; }
 
         [Required]
         public string Name { get; set; }

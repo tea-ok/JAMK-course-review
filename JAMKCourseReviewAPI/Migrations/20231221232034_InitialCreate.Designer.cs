@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAMKCourseReviewAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231221223951_InitialCreate")]
+    [Migration("20231221232034_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

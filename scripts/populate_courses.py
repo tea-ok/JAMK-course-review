@@ -39,7 +39,6 @@ courses_column_mappings = {
 }
 
 teachers_column_mappings = {
-    'teacher_id': 'OriginalTeacherId',
     'name': 'Name',
 }
 
@@ -48,13 +47,13 @@ junction_column_mappings = {
     'course_code': 'CourseCode',
 }
 
-courses_df = pd.read_csv('../data/new_courses.csv')
+courses_df = pd.read_csv('../data/courses.csv')
 courses_df.rename(columns=courses_column_mappings, inplace=True)
 
-teachers_df = pd.read_csv('../data/new_teachers.csv')
+teachers_df = pd.read_csv('../data/teachers.csv')
 teachers_df.rename(columns=teachers_column_mappings, inplace=True)
 
-junction_df = pd.read_csv('../data/new_junction.csv')
+junction_df = pd.read_csv('../data/junction.csv')
 junction_df.rename(columns=junction_column_mappings, inplace=True)
 
 def df_to_sql(df, table_name, engine):
