@@ -59,11 +59,6 @@ junction_df.rename(columns=junction_column_mappings, inplace=True)
 def df_to_sql(df, table_name, engine):
     df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-# Insert data into Courses table from DataFrame
 df_to_sql(courses_df, 'Courses', engine)
-
-# Insert data into Teachers table from DataFrame
 df_to_sql(teachers_df, 'Teachers', engine)
-
-# Insert data into TeacherCourses table (Junction table) from DataFrame
 df_to_sql(junction_df, 'TeacherCourses', engine)
