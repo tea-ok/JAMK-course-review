@@ -31,18 +31,20 @@ public class CourseService
 
         return new 
         {
-            Teachers = teachers,
             Course = course,
+            Teachers = teachers
         };
     }
 
     public async Task<IEnumerable<dynamic>> GetTeacherCourses()
     {
         return await _context.TeacherCourses
-            .Select(tc => new 
+            .Include(tc => tc.Course)
+            .GroupBy(tc => tc.Course)
+            .Select(g => new 
             {
-                Teacher = tc.Teacher,
-                Course = tc.Course
+                Course = g.Key,
+                Teachers = g.Select(tc => tc.Teacher).ToList()
             })
             .ToListAsync();
     }
