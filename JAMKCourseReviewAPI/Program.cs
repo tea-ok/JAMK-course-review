@@ -25,6 +25,9 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TestDB") + ";TrustServerCertificate=true"));
 
+// Add CourseService
+builder.Services.AddScoped<CourseService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

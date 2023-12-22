@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace JAMKCourseReviewAPI.Controllers
 {
     [ApiController]
-    [Route("users")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -23,6 +23,7 @@ namespace JAMKCourseReviewAPI.Controllers
             _configuration = configuration;
         }
 
+        // GET: /api/users/register
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
@@ -46,6 +47,7 @@ namespace JAMKCourseReviewAPI.Controllers
             }
         }
 
+        // GET: /api/users/login
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -61,6 +63,7 @@ namespace JAMKCourseReviewAPI.Controllers
             }
         }
 
+        // GET: /api/users/logout
         [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
@@ -69,6 +72,7 @@ namespace JAMKCourseReviewAPI.Controllers
             return Ok(new { message = "Logged out" });
         }
 
+        // GET: /api/users/protected
         [Authorize]
         [HttpGet("protected")] // Testing authorization
         public IActionResult Protected()
