@@ -13,11 +13,37 @@ public class CourseService
         _context = context;
     }
 
-    public async Task<List<TeacherCourse>> GetTeacherCourses()
+    public async Task<dynamic> GetCourseByCode(string courseCode)
+    {
+        var course = await _context.Courses
+            .Where(c => c.CourseCode == courseCode)
+            .FirstOrDefaultAsync();
+
+        if (course == null)
+        {
+            return null;
+        }
+
+        var teachers = await _context.TeacherCourses
+            .Where(tc => tc.CourseCode == course.CourseCode)
+            .Select(tc => tc.Teacher)
+            .ToListAsync();
+
+        return new 
+        {
+            Teachers = teachers,
+            Course = course,
+        };
+    }
+
+    public async Task<IEnumerable<dynamic>> GetTeacherCourses()
     {
         return await _context.TeacherCourses
-            .Include(tc => tc.Course)
-            .Include(tc => tc.Teacher)
+            .Select(tc => new 
+            {
+                Teacher = tc.Teacher,
+                Course = tc.Course
+            })
             .ToListAsync();
     }
 }
