@@ -15,5 +15,6 @@ namespace JAMKCourseReviewAPI.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<TeacherCourse> TeacherCourses { get; set; }
+        public DbSet<AcademicWishlist> AcademicWishlists { get; set; }
     }
 }
