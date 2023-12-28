@@ -1,15 +1,10 @@
 # JAMK Course Review App
 
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
-
 ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
-
 ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
-
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white)
-
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Description
@@ -43,4 +38,8 @@ The application is currently in the early stages of development, with the backen
 
 -   [x] Add functionality for user authentication and registration, using Entity Framework Core Identity
 -   [x] Add functionality for getting all courses, as well as a single course by course code
--   [] Add functionality for adding courses to the user's "Academic Wishlist"
+-   [ ] Add functionality for adding courses to the user's "Academic Wishlist"
+
+## Contributors
+
+-   Taavi Kalaluka
