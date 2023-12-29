@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-public class LoginModel
+public class Login
 {
     [Required]
     [StringLength(50)]
