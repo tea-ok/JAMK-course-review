@@ -15,23 +15,24 @@ public class AcademicWishlistService
 
     public async Task<IEnumerable<dynamic>> GetWishlistByUserId(int userId)
     {
-        var wishlistCourses = await _context.AcademicWishlists
+        var wishlistItems = await _context.AcademicWishlists
             .Where(w => w.UserId == userId)
-            .Select(w => w.Course)
+            .Select(w => new { w.Course, w.AcademicWishlistId })
             .ToListAsync();
 
         var result = new List<dynamic>();
 
-        foreach (var course in wishlistCourses)
+        foreach (var item in wishlistItems)
         {
             var teachers = await _context.TeacherCourses
-                .Where(tc => tc.CourseCode == course.CourseCode)
+                .Where(tc => tc.CourseCode == item.Course.CourseCode)
                 .Select(tc => tc.Teacher)
                 .ToListAsync();
 
             result.Add(new 
             {
-                Course = course,
+                AcademicWishlistId = item.AcademicWishlistId,
+                Course = item.Course,
                 Teachers = teachers
             });
         }
