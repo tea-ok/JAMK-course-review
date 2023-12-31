@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using JAMKCourseReviewAPI.Models;
 using JAMKCourseReviewAPI.Data;

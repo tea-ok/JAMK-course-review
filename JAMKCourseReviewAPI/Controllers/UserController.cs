@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JAMKCourseReviewAPI.Models;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 
 namespace JAMKCourseReviewAPI.Controllers
@@ -14,13 +11,11 @@ namespace JAMKCourseReviewAPI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IConfiguration _configuration;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _configuration = configuration;
         }
 
         // GET: /api/users/register
@@ -70,15 +65,6 @@ namespace JAMKCourseReviewAPI.Controllers
         {
             await _signInManager.SignOutAsync();
             return Ok(new { message = "Logged out" });
-        }
-
-        // GET: /api/users/protected
-        [Authorize]
-        [HttpGet("protected")] // Testing authorization
-        public IActionResult Protected()
-        {
-            string username = User.Identity.Name;
-            return Ok(new { message = $"Hello {username}" });
         }
     }
 }

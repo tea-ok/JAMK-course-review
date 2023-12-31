@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JAMKCourseReviewAPI.Models;
-using JAMKCourseReviewAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -16,7 +14,7 @@ public class AcademicWishlistController : ControllerBase
         _wishlistService = wishlistService;
     }
 
-    // GET: api/wishlist
+    // GET: /api/wishlist
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetWishlistByUserId()
@@ -26,6 +24,7 @@ public class AcademicWishlistController : ControllerBase
         return Ok(wishlist);
     }
 
+    // POST: /api/wishlist
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddToWishlist([FromBody] AcademicWishlistInputModel wishlistItem)
@@ -50,7 +49,7 @@ public class AcademicWishlistController : ControllerBase
         return Ok();
     }
 
-    // DELETE: api/wishlist?wishlistId={wishlistId}
+    // DELETE: /api/wishlist?wishlistId={wishlistId}
     [Authorize]
     [HttpDelete]
     public async Task<IActionResult> RemoveFromWishlist([FromQuery] int wishlistId)

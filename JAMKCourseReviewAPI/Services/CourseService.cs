@@ -1,8 +1,5 @@
-using JAMKCourseReviewAPI.Models;
 using JAMKCourseReviewAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class CourseService
 {
