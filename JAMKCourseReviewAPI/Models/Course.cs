@@ -32,5 +32,6 @@ namespace JAMKCourseReviewAPI.Models
         public float? ContactCredits { get; set; }
         public float? MinSeats { get; set; }
         public float? MaxSeats { get; set; }
+        public ICollection<Review> Reviews { get; set; } // navigation property, reviews for this course
     }
 }
