@@ -28,8 +28,8 @@ namespace JAMKCourseReviewAPI.Models
         public int DifficultyRating { get; set; }
 
         [Required]
-        [Range(1, 5)]
-        public int WorkloadRating { get; set; }
+        [Range(1, 30)]
+        public int HoursPerWeek { get; set; } // Hours per week spent on the course
 
         [Required]
         [Range(1, 5)]
@@ -40,7 +40,6 @@ namespace JAMKCourseReviewAPI.Models
         public int LectureRating { get; set; }
 
         [Required]
-        [Range(1, 5)]
         public bool WouldTakeAgain { get; set; }
 
         [Required]

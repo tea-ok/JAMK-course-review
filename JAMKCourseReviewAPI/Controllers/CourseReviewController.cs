@@ -16,7 +16,7 @@ namespace JAMKCourseReviewAPI.Controllers
             _courseReviewService = service;
         }
 
-        // GET: /api/reviews?courseCode={courseCode}
+        // GET: /api/reviews/reviews-for-course?courseCode={courseCode}
         [Authorize]
         [HttpGet("reviews-for-course")]
         public async Task<ActionResult<List<CourseReview>>> GetReviewsByCourseCode([FromQuery] string courseCode)
@@ -73,9 +73,9 @@ namespace JAMKCourseReviewAPI.Controllers
                 CourseCode = review.CourseCode,
                 OverallRating = review.OverallRating,
                 DifficultyRating = review.DifficultyRating,
-                WorkloadRating = review.WorkloadRating,
                 ContentRating = review.ContentRating,
                 LectureRating = review.LectureRating,
+                HoursPerWeek = review.HoursPerWeek,
                 WouldTakeAgain = review.WouldTakeAgain,
                 ReviewText = review.ReviewText
             };
