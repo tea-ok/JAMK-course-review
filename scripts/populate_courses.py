@@ -1,3 +1,5 @@
+# Populating MSSQL database with data from CSV files
+
 import os
 import pandas as pd
 from dotenv import load_dotenv

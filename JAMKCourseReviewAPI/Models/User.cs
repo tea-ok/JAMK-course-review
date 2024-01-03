@@ -13,6 +13,6 @@ namespace JAMKCourseReviewAPI.Models
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
-        public ICollection<Review> Reviews { get; set; } // navigation property, reviews by this user
+        public ICollection<CourseReview> Reviews { get; set; } // navigation property, reviews by this user
     }
 }

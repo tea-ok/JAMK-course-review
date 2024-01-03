@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JAMKCourseReviewAPI.Models
 {
-    public class Review
+    [Table("CourseReviews")] // Had to add this because EF Core was trying to create a table called CourseReview
+    public class CourseReview
     {
         [Key]
         public int ReviewId { get; set; }
