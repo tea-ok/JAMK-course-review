@@ -14,6 +14,8 @@ public class CourseReviewService
     {
         _context.CourseReviews.Add(review);
         await _context.SaveChangesAsync();
+        
+        _context.Entry(review).Reload();
         return review;
     }
 
@@ -21,6 +23,8 @@ public class CourseReviewService
     {
         _context.Entry(review).State = EntityState.Modified;
         await _context.SaveChangesAsync();
+        
+        _context.Entry(review).Reload();
         return review;
     }
 

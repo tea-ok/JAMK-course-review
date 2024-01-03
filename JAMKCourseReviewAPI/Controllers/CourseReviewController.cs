@@ -67,6 +67,19 @@ namespace JAMKCourseReviewAPI.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            // Check if user has already reviewed this course
+            var existingReviews = await _courseReviewService.GetReviewsByUser(int.Parse(userId));
+            if (existingReviews != null)
+            {
+                foreach (var existingReview in existingReviews)
+                {
+                    if (existingReview.CourseCode == review.CourseCode)
+                    {
+                        return BadRequest("You have already reviewed this course.");
+                    }
+                }
+            }
+
             var newReview = new CourseReview
             {
                 UserId = int.Parse(userId),
@@ -87,11 +100,11 @@ namespace JAMKCourseReviewAPI.Controllers
         // PUT: /api/reviews/update
         [Authorize]
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateReview([FromBody] CourseReview review)
+        public async Task<IActionResult> UpdateReview([FromQuery] int reviewId, [FromBody] CourseReviewInput review)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var existingReview = await _courseReviewService.GetReviewById(review.ReviewId);
+            var existingReview = await _courseReviewService.GetReviewById(reviewId);
             if (existingReview == null)
             {
                 return NotFound();
@@ -102,7 +115,16 @@ namespace JAMKCourseReviewAPI.Controllers
                 return Forbid();
             }
 
-            var updatedReview = await _courseReviewService.UpdateReview(review);
+            existingReview.CourseCode = review.CourseCode;
+            existingReview.OverallRating = review.OverallRating;
+            existingReview.DifficultyRating = review.DifficultyRating;
+            existingReview.ContentRating = review.ContentRating;
+            existingReview.LectureRating = review.LectureRating;
+            existingReview.HoursPerWeek = review.HoursPerWeek;
+            existingReview.WouldTakeAgain = review.WouldTakeAgain;
+            existingReview.ReviewText = review.ReviewText;
+
+            var updatedReview = await _courseReviewService.UpdateReview(existingReview);
 
             if (updatedReview == null)
             {
@@ -130,13 +152,7 @@ namespace JAMKCourseReviewAPI.Controllers
                 return Forbid();
             }
 
-            var result = await _courseReviewService.DeleteReview(reviewId);
-
-            if (!result)
-            {
-                return NotFound();
-            }
-
+            await _courseReviewService.DeleteReview(reviewId);
             return NoContent();
         }
     }

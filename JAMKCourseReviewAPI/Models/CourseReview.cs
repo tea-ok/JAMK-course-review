@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace JAMKCourseReviewAPI.Models
 {
@@ -12,11 +13,15 @@ namespace JAMKCourseReviewAPI.Models
         [Required]
         [ForeignKey("User")]
         public int UserId { get; set; }
+
+        [JsonIgnore]
         public User User { get; set; }
 
         [Required]
         [ForeignKey("Course")]
         public string CourseCode { get; set; }
+        
+        [JsonIgnore]
         public Course Course { get; set; }
 
         [Required]
