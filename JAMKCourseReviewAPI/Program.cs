@@ -28,6 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add Services
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<AcademicWishlistService>();
+builder.Services.AddScoped<CourseReviewService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

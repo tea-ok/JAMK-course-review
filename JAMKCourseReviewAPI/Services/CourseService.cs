@@ -33,7 +33,7 @@ public class CourseService
         };
     }
 
-    public async Task<IEnumerable<dynamic>> GetTeacherCourses()
+    public async Task<IEnumerable<dynamic>> GetTeacherCourses() // Gets courses + their teachers
     {
         return await _context.TeacherCourses
             .Include(tc => tc.Course)

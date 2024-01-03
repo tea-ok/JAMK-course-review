@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JAMKCourseReviewAPI.Models
 {
-    public class AcademicWishlistInputModel
+    public class AcademicWishlistInput
     {
         [Required]
         public int UserId { get; set; }

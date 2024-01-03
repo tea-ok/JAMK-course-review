@@ -3,68 +3,71 @@ using JAMKCourseReviewAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-[Route("api/wishlist")]
-[ApiController]
-public class AcademicWishlistController : ControllerBase
+namespace JAMKCourseReviewAPI.Controllers
 {
-    private readonly AcademicWishlistService _wishlistService;
-
-    public AcademicWishlistController(AcademicWishlistService wishlistService)
+    [ApiController]
+    [Route("api/wishlist")]
+    public class AcademicWishlistController : ControllerBase
     {
-        _wishlistService = wishlistService;
-    }
+        private readonly AcademicWishlistService _wishlistService;
 
-    // GET: /api/wishlist
-    [Authorize]
-    [HttpGet]
-    public async Task<IActionResult> GetWishlistByUserId()
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var wishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
-        return Ok(wishlist);
-    }
-
-    // POST: /api/wishlist
-    [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> AddToWishlist([FromBody] AcademicWishlistInputModel wishlistItem)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
-
-        var existingItem = userWishlist.FirstOrDefault(item => item.Course.CourseCode == wishlistItem.CourseCode);
-
-        if (existingItem != null)
+        public AcademicWishlistController(AcademicWishlistService wishlistService)
         {
-            return BadRequest("Course already in Academic Wishlist");
+            _wishlistService = wishlistService;
         }
 
-        var newWishlistItem = new AcademicWishlist 
+        // GET: /api/wishlist
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetWishlistByUserId()
         {
-            UserId = int.Parse(userId),
-            CourseCode = wishlistItem.CourseCode
-        };
-
-        await _wishlistService.AddToWishlist(newWishlistItem);
-        return Ok();
-    }
-
-    // DELETE: /api/wishlist?wishlistId={wishlistId}
-    [Authorize]
-    [HttpDelete]
-    public async Task<IActionResult> RemoveFromWishlist([FromQuery] int wishlistId)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
-
-        var wishlistItem = userWishlist.FirstOrDefault(item => item.AcademicWishlistId == wishlistId);
-
-        if (wishlistItem == null)
-        {
-            return NotFound();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var wishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
+            return Ok(wishlist);
         }
 
-        await _wishlistService.RemoveFromWishlist(wishlistId);
-        return NoContent();
+        // POST: /api/wishlist
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddToWishlist([FromBody] AcademicWishlistInput wishlistItem)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
+
+            var existingItem = userWishlist.FirstOrDefault(item => item.Course.CourseCode == wishlistItem.CourseCode);
+
+            if (existingItem != null)
+            {
+                return BadRequest("Course already in Academic Wishlist");
+            }
+
+            var newWishlistItem = new AcademicWishlist 
+            {
+                UserId = int.Parse(userId),
+                CourseCode = wishlistItem.CourseCode
+            };
+
+            await _wishlistService.AddToWishlist(newWishlistItem);
+            return Ok();
+        }
+
+        // DELETE: /api/wishlist?wishlistId={wishlistId}
+        [Authorize]
+        [HttpDelete]
+        public async Task<IActionResult> RemoveFromWishlist([FromQuery] int wishlistId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
+
+            var wishlistItem = userWishlist.FirstOrDefault(item => item.AcademicWishlistId == wishlistId);
+
+            if (wishlistItem == null)
+            {
+                return NotFound();
+            }
+
+            await _wishlistService.RemoveFromWishlist(wishlistId);
+            return NoContent();
+        }
     }
 }
