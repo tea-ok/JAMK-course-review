@@ -45,8 +45,8 @@ The application is currently in the early stages of development, with the backen
 **Frontend**:
 
 -   [x] Set up Angular project
--   [ ] Add basic routing
--   [ ] Add login and registration functionality
+-   [x] Add basic routing
+-   [ ] Add header and footer components
 
 ## Contributors
 

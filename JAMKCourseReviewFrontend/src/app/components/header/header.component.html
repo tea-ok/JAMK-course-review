@@ -1,0 +1,24 @@
+<mat-toolbar class="max-w-7x1 mx-auto border-x justify-between">
+  <a routerLink="/"><h1 class="text-3xl">JAMK Course Review</h1></a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <a routerLink="account">Account</a>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>assignment</mat-icon>
+      <a routerLink="wishlist">Academic Wishlist</a>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>thumbs_up_down</mat-icon>
+      <a routerLink="my-reviews">Reviews</a>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <a routerLink="logout">Logout</a>
+    </button>
+  </mat-menu>
+</mat-toolbar>
