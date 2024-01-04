@@ -1,0 +1,14 @@
+.searchbar-form {
+  min-width: 150px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.searchbar-full-width {
+  width: 100%;
+}
+
+:host {
+  width: 100%;
+  max-width: 800px;
+}
