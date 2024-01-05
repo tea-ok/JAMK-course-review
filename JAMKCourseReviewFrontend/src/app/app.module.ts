@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './pages/search/search.component';
 import { SearchbarComponent } from './pages/search/components/searchbar/searchbar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -39,6 +40,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    HttpClientModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

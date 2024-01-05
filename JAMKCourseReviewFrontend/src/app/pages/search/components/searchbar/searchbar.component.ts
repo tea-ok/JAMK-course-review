@@ -2,29 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-searchbar',
   templateUrl: './searchbar.component.html',
-  styleUrl: './searchbar.component.css',
+  styleUrls: ['./searchbar.component.css'],
 })
 export class SearchbarComponent implements OnInit {
   myControl = new FormControl();
-  options: string[] = ['Course 1', 'Course 2', 'Course 3']; // TODO: Get courses from backend
-  filteredOptions!: Observable<string[]>;
+  options: { name: string; code: string }[] = [];
+  filteredOptions!: Observable<{ name: string; code: string }[]>;
+
+  constructor(private courseService: CourseService) {}
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value))
-    );
+    this.courseService.getCourses().subscribe((courses) => {
+      this.options = (courses as any[]).map((course) => ({
+        name: `${course.course.courseTitle} - ${course.course.courseCode}`,
+        code: course.course.courseCode,
+      }));
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value))
+      );
+    });
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string): { name: string; code: string }[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter((option) =>
-      option.toLowerCase().includes(filterValue)
+      option.name.toLowerCase().includes(filterValue)
     );
   }
 }
