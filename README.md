@@ -47,7 +47,8 @@ The application is currently in the early stages of development, with the backen
 -   [x] Set up Angular project
 -   [x] Add header and footer components
 -   [x] Add searchbar component with mock data
--   [ ] Modify searchbar component to fetch data from backend
+-   [x] Modify searchbar component to fetch data from backend
+-   [ ] Fully restructure the app into features, shared and core modules
 
 ## Contributors
 
