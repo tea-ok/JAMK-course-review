@@ -25,6 +25,19 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TestDB") + ";TrustServerCertificate=true"));
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
+
 // Add Services
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<AcademicWishlistService>();

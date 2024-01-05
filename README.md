@@ -38,8 +38,8 @@ The application is currently in the early stages of development, with the backen
 
 -   [x] Add functionality for user authentication and registration, using Entity Framework Core Identity
 -   [x] Add functionality for getting all courses, as well as a single course by course code
--   [x] Add functionality for adding courses to the user's "Academic Wishlist"
--   [x] Add functionality for adding course reviews
+-   [x] Add functionality for "Academic Wishlist"
+-   [x] Add functionality for course reviews
 -   [ ] Continue after implementing basic frontend functionality
 
 **Frontend**:
