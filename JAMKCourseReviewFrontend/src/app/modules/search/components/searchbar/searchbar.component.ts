@@ -3,6 +3,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CourseService } from '../../services/course.service';
+import { Course } from '../../../../shared/models/course.model';
 
 @Component({
   selector: 'app-searchbar',
@@ -11,17 +12,14 @@ import { CourseService } from '../../services/course.service';
 })
 export class SearchbarComponent implements OnInit {
   myControl = new FormControl();
-  options: { name: string; code: string }[] = [];
-  filteredOptions!: Observable<{ name: string; code: string }[]>;
+  options: Course[] = [];
+  filteredOptions!: Observable<Course[]>;
 
   constructor(private courseService: CourseService) {}
 
   ngOnInit() {
-    this.courseService.getCourses().subscribe((courses) => {
-      this.options = (courses as any[]).map((course) => ({
-        name: `${course.course.courseTitle} - ${course.course.courseCode}`,
-        code: course.course.courseCode,
-      }));
+    this.courseService.getCourses().subscribe((data) => {
+      this.options = data;
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map((value) => this._filter(value))
@@ -29,11 +27,13 @@ export class SearchbarComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): { name: string; code: string }[] {
+  private _filter(value: string): Course[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
+    return this.options.filter(
+      (option) =>
+        option.course.courseTitle.toLowerCase().includes(filterValue) ||
+        option.course.courseCode.toLowerCase().includes(filterValue)
     );
   }
 }

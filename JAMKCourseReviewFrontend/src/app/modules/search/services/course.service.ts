@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Course } from '../../../shared/models/course.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class CourseService {
   constructor(private http: HttpClient) {}
 
-  getCourses(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:5073/api/courses'); // GET all courses
+  getCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>('http://localhost:5073/api/courses'); // GET all courses
   }
 }
