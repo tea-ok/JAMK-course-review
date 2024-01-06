@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './core/components/header/header.module';
 import { FooterModule } from './core/components/footer/footer.module';
 import { SearchModule } from './modules/search/search.module';
+import { LoginModule } from './modules/login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { SearchModule } from './modules/search/search.module';
     SearchModule,
     HeaderModule,
     FooterModule,
+    LoginModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
