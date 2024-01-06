@@ -50,7 +50,20 @@ namespace JAMKCourseReviewAPI.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { message = "Logged in" });
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user == null)
+                {
+                    return BadRequest(new { message = "Username or password is incorrect" });
+                }
+
+                return Ok(new
+                {
+                    user.Id,
+                    user.UserName,
+                    user.Email,
+                    user.FirstName,
+                    user.LastName
+                });
             }
             else
             {
