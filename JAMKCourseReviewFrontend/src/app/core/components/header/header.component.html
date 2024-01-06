@@ -4,21 +4,29 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <mat-icon>account_circle</mat-icon>
-      <a routerLink="account">Account</a>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>assignment</mat-icon>
-      <a routerLink="wishlist">Academic Wishlist</a>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>thumbs_up_down</mat-icon>
-      <a routerLink="my-reviews">Reviews</a>
-    </button>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      Log out
-    </button>
+    <ng-container *ngIf="currentUser$ | async as currentUser">
+      <button mat-menu-item>
+        <mat-icon>account_circle</mat-icon>
+        <a routerLink="account">Account</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>assignment</mat-icon>
+        <a routerLink="wishlist">Academic Wishlist</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>thumbs_up_down</mat-icon>
+        <a routerLink="my-reviews">Reviews</a>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Log out
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!(currentUser$ | async)">
+      <a mat-menu-item routerLink="/login">
+        <mat-icon>login</mat-icon>
+        Log in
+      </a>
+    </ng-container>
   </mat-menu>
 </mat-toolbar>

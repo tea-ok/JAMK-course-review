@@ -14,7 +14,7 @@ export class LoginFormComponent {
       // Has to be done, since the error message is in the format "<message> (<timestamp>)"
       // That was done to ensure that the error message is unique, enabling it to be shown multiple times.
       const actualMessage = message.split(' (')[0];
-      this.openSnackBar(actualMessage, 'x');
+      this.openSnackBar(actualMessage, '');
     }
   }
 
