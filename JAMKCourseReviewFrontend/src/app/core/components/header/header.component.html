@@ -16,9 +16,9 @@
       <mat-icon>thumbs_up_down</mat-icon>
       <a routerLink="my-reviews">Reviews</a>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon>
-      <a routerLink="logout">Logout</a>
+      Log out
     </button>
   </mat-menu>
 </mat-toolbar>

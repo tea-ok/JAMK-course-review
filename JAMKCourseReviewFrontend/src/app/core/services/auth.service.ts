@@ -15,7 +15,11 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/login`, { username, password })
+      .post<any>(
+        `${this.apiUrl}/login`,
+        { username, password },
+        { withCredentials: true }
+      )
       .pipe(
         tap((response) => {
           if (response.success) {
