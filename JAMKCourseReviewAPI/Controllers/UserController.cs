@@ -58,11 +58,11 @@ namespace JAMKCourseReviewAPI.Controllers
 
                 return Ok(new
                 {
-                    user.Id,
-                    user.UserName,
-                    user.Email,
-                    user.FirstName,
-                    user.LastName
+                    userId = user.Id,
+                    username = user.UserName,
+                    email = user.Email,
+                    firstName = user.FirstName,
+                    lastName = user.LastName
                 });
             }
             else
