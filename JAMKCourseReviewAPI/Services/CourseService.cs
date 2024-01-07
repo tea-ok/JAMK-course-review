@@ -13,6 +13,7 @@ public class CourseService
     public async Task<dynamic> GetCourseByCode(string courseCode)
     {
         var course = await _context.Courses
+            .Include(c => c.Reviews)
             .Where(c => c.CourseCode == courseCode)
             .FirstOrDefaultAsync();
 
@@ -26,10 +27,21 @@ public class CourseService
             .Select(tc => tc.Teacher)
             .ToListAsync();
 
+        var AvgRatings = course.Reviews.Count != 0 ? new 
+        {
+            OverallRating = course.Reviews.Average(r => r.OverallRating),
+            DifficultyRating = course.Reviews.Average(r => r.DifficultyRating),
+            HoursPerWeek = course.Reviews.Average(r => r.HoursPerWeek),
+            ContentRating = course.Reviews.Average(r => r.ContentRating),
+            LectureRating = course.Reviews.Average(r => r.LectureRating),
+            WouldTakeAgainPercentage = course.Reviews.Average(r => r.WouldTakeAgain ? 1 : 0) * 100
+        } : null;
+
         return new 
         {
             Course = course,
-            Teachers = teachers
+            Teachers = teachers,
+            AvgRatings = AvgRatings
         };
     }
 

@@ -40,7 +40,7 @@ The application is currently in the early stages of development, with the backen
 -   [x] Add functionality for getting all courses, as well as a single course by course code
 -   [x] Add functionality for "Academic Wishlist"
 -   [x] Add functionality for course reviews
--   [ ] Continue after implementing basic frontend functionality
+-   [x] Add automatic calculation of average rating for each course, and return that value when getting a single course
 
 **Frontend**:
 
