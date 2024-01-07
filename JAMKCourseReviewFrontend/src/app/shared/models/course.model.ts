@@ -25,7 +25,6 @@ export interface Course {
     contactCredits: number | null;
     minSeats: number | null;
     maxSeats: number | null;
-    reviews: string | null; // TODO: Change to Review[]
   };
   teachers: Teacher[];
 }

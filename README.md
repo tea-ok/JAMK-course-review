@@ -49,7 +49,8 @@ The application is currently in the early stages of development, with the backen
 -   [x] Add searchbar component with mock data
 -   [x] Modify searchbar component to fetch data from backend
 -   [x] Fully restructure the app into modules, shared and core + implement lazy loading
--   [ ] Add login and registration functionality
+-   [x] Add login and functionality + auth service
+-   [ ] Add course details page
 
 ## Contributors
 
