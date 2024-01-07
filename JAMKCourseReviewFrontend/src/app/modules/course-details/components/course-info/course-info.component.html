@@ -1,1 +1,15 @@
-<p>course-info works!</p>
+<mat-card *ngIf="course">
+  <mat-card-title class="mat-display-1">{{
+    course.course.courseTitle
+  }}</mat-card-title>
+
+  <mat-grid-list cols="3" rowHeight="2:1" gutterSize="10px">
+    <mat-grid-tile *ngFor="let rating of avgRatingsArray">
+      <app-rating-box [rating]="rating"></app-rating-box>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-card-content>
+    <p class="mat-body-1">{{ course.course.objective }}</p>
+  </mat-card-content>
+</mat-card>

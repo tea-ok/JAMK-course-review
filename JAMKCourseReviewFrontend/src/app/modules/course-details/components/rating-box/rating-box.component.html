@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-content class="mat-display-2">
+    {{
+      rating.key === "wouldTakeAgainPercentage"
+        ? rating.value + "%"
+        : rating.value + "/5"
+    }}
+  </mat-card-content>
+</mat-card>
+<div class="mat-card-subtitle">{{ rating.key }}</div>
