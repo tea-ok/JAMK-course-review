@@ -4,6 +4,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../../../shared/models/course.model';
+import { Router } from '@angular/router';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-searchbar',
@@ -15,7 +17,7 @@ export class SearchbarComponent implements OnInit {
   options: Course[] = [];
   filteredOptions!: Observable<Course[]>;
 
-  constructor(private courseService: CourseService) {}
+  constructor(private courseService: CourseService, private router: Router) {}
 
   ngOnInit() {
     this.courseService.getCourses().subscribe((data) => {
@@ -35,5 +37,10 @@ export class SearchbarComponent implements OnInit {
         option.course.courseTitle.toLowerCase().includes(filterValue) ||
         option.course.courseCode.toLowerCase().includes(filterValue)
     );
+  }
+
+  onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    const courseCode = event.option.value;
+    this.router.navigate(['/course-details', courseCode]);
   }
 }

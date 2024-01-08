@@ -20,14 +20,11 @@ export class CourseInfoComponent {
         .getCourseDetails(this.courseCode)
         .subscribe((course) => {
           this.course = course;
+          console.log('Course details: ', this.course);
+          this.avgRatingsArray = Object.entries(this.course.avgRatings).map(
+            ([key, value]) => ({ key, value: Number(value) })
+          );
         });
-    }
-
-    if (this.course) {
-      console.log('Course details: ', this.course);
-      this.avgRatingsArray = Object.entries(this.course.avgRatings).map(
-        ([key, value]) => ({ key, value: Number(value) })
-      );
     }
   }
 }
