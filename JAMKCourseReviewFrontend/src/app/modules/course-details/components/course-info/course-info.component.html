@@ -10,6 +10,6 @@
   </mat-grid-list>
 
   <mat-card-content>
-    <p class="mat-body-1">{{ course.course.objective }}</p>
+    <p class="mat-body-1" [innerHTML]="course.course.objective"></p>
   </mat-card-content>
 </mat-card>

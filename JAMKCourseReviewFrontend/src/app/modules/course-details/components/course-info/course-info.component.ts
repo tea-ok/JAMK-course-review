@@ -21,6 +21,15 @@ export class CourseInfoComponent {
         .subscribe((course) => {
           this.course = course;
           console.log('Course details: ', this.course);
+
+          // Replace newlines with <br> tags
+          if (this.course.course.objective) {
+            this.course.course.objective = this.course.course.objective.replace(
+              /\r?\n/g,
+              '<br>'
+            );
+          }
+
           if (this.course.avgRatings) {
             this.avgRatingsArray = Object.entries(this.course.avgRatings).map(
               ([key, value]) => ({ key, value: Number(value) })
