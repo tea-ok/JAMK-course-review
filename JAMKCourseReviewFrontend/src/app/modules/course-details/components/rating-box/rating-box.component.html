@@ -1,12 +1,18 @@
-<mat-card>
-  <mat-card-content class="mat-display-2">
-    {{
-      rating.value !== rating.value
-        ? "?"
-        : rating.key === "wouldTakeAgainPercentage"
-        ? rating.value + "%"
-        : rating.value + "/5"
-    }}
-  </mat-card-content>
-</mat-card>
-<div class="mat-card-subtitle">{{ subtitle }}</div>
+<div class="rating-container">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-content class="content-center">
+      <span class="large-font">
+        {{
+          rating.value !== rating.value
+            ? "?"
+            : rating.key === "wouldTakeAgainPercentage"
+            ? rating.value + "%"
+            : rating.key === "hoursPerWeek"
+            ? rating.value
+            : rating.value + "/5"
+        }}
+      </span>
+    </mat-card-content>
+  </mat-card>
+  <div class="subtitle">{{ subtitle }}</div>
+</div>
