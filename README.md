@@ -41,6 +41,7 @@ The application is currently in the early stages of development, with the backen
 -   [x] Add functionality for "Academic Wishlist"
 -   [x] Add functionality for course reviews
 -   [x] Add automatic calculation of average rating for each course, and return that value when getting a single course
+-   [ ] Add sign in with Microsoft account functionality - students can sign in straight with their student account
 
 **Frontend**:
 
@@ -50,7 +51,8 @@ The application is currently in the early stages of development, with the backen
 -   [x] Modify searchbar component to fetch data from backend
 -   [x] Fully restructure the app into modules, shared and core + implement lazy loading
 -   [x] Add login and functionality + auth service
--   [ ] Add course details page
+-   [x] Add course details page
+-   [ ] Add reviews to course details page
 
 ## Contributors
 

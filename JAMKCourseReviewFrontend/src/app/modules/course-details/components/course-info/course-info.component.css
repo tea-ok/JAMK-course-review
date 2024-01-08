@@ -1,0 +1,9 @@
+.course-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+mat-card {
+  width: 80%;
+  margin: auto; /* Horizontal centering */
+}
