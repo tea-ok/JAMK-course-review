@@ -34,3 +34,4 @@ appsettings.Development.json
 # Miscellaneous
 ICT_Bachelors_ENG.json
 .env
+db.sh

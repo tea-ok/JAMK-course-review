@@ -54,6 +54,41 @@ The application is currently in the early stages of development, with the backen
 -   [x] Add course details page
 -   [ ] Add reviews to course details page
 
+### Database initialization and population
+
+**Will be improved later, this is just for development purposes**
+
+1. Clone the repository
+
+2. Navigate to the [`Docker/database`](./Docker/database/) folder
+
+3. Run `docker-compose up -d` to start the database container and make sure it's running with `docker ps`
+
+4. Navigate to the [`JAMKCourseReviewAPI`](./JAMKCourseReviewAPI/) folder
+
+5. Add the connection string to the `appsettings.Development.json` file:
+
+```json
+"ConnectionStrings": {
+    "TestDB": "Server=localhost,1433;Database=TestDB;User Id=sa;Password=YourStrong@Passw0rd;"
+}
+```
+
+6. Run `dotnet ef database update` to make the migrations
+
+7. Create a `.env` file in the root directory of the project and add the following:
+
+```
+DB_SERVER=localhost,1433
+DB_DATABASE=TestDB
+DB_USERNAME=SA
+DB_PASSWORD=YourStrong@Passw0rd
+```
+
+8. Run the [course population script](./scripts/populate_courses.py) - you have to install `sqlalchemy`, `pandas` and `python-dotenv` first.
+
+9. Now you can run the API with `dotnet run`
+
 ## Contributors
 
 -   Taavi Kalaluka
