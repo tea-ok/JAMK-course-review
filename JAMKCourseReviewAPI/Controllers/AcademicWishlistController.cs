@@ -22,6 +22,11 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<IActionResult> GetWishlistByUserId()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
+
             var wishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
             return Ok(wishlist);
         }
@@ -32,6 +37,11 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<IActionResult> AddToWishlist([FromBody] AcademicWishlistInput wishlistItem)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
+
             var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
 
             var existingItem = userWishlist.FirstOrDefault(item => item.Course.CourseCode == wishlistItem.CourseCode);
@@ -57,6 +67,11 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<IActionResult> RemoveFromWishlist([FromQuery] int wishlistId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
+            
             var userWishlist = await _wishlistService.GetWishlistByUserId(int.Parse(userId));
 
             var wishlistItem = userWishlist.FirstOrDefault(item => item.AcademicWishlistId == wishlistId);

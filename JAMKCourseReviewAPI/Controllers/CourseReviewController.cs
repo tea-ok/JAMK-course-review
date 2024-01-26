@@ -37,6 +37,11 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<ActionResult<List<CourseReview>>> GetReviewsByUserId()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
+
             var reviews = await _courseReviewService.GetReviewsByUser(int.Parse(userId));
 
             if (reviews == null)
@@ -66,6 +71,10 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<ActionResult<CourseReview>> AddReview([FromBody] CourseReviewInput review)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
 
             // Check if user has already reviewed this course
             var existingReviews = await _courseReviewService.GetReviewsByUser(int.Parse(userId));
@@ -103,6 +112,10 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<IActionResult> UpdateReview([FromQuery] int reviewId, [FromBody] CourseReviewInput review)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
 
             var existingReview = await _courseReviewService.GetReviewById(reviewId);
             if (existingReview == null)
@@ -140,6 +153,10 @@ namespace JAMKCourseReviewAPI.Controllers
         public async Task<IActionResult> DeleteReview([FromQuery] int reviewId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest("User ID not found.");
+            }
 
             var existingReview = await _courseReviewService.GetReviewById(reviewId);
             if (existingReview == null)

@@ -87,7 +87,7 @@ DB_PASSWORD=YourStrong@Passw0rd
 
 8. Run the [course population script](./scripts/populate_courses.py) - you have to install `sqlalchemy`, `pandas` and `python-dotenv` first.
 
-9. Now you can run the API with `dotnet run`
+9. Now you can run `dotnet restore`, followed by `dotnet run` to start the API.
 
 ## Contributors
 
