@@ -10,7 +10,7 @@ public class CourseService
         _context = context;
     }
 
-    public async Task<dynamic> GetCourseByCode(string courseCode)
+    public async Task<dynamic?> GetCourseByCode(string courseCode)
     {
         var course = await _context.Courses
             .Include(c => c.Reviews)
