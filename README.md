@@ -24,7 +24,7 @@ This application (still in development), is a full stack web application that al
 
 ### Current Phase of Development
 
-The application is currently in the early stages of development, with the backend being developed using C# and ASP.NET Core, using Microsoft SQL Server for the database.
+The backend is ready, built with C# and ASP.NET Core with Microsoft SQL Server as the database. The frontend is still in development, being built with Angular. This phase is currently on hold, as I am focusing on finishing up my school assignments first.
 
 #### Progress:
 
